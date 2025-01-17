@@ -2,13 +2,14 @@ import React from 'react'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Link from 'next/link';
 
 const page = () => {
   return (
-    <div className='flex justify-around w-[1000px] m-auto'>
-        <div className="w-[300px] bg-blue-500 h-[500px] flex flex-col items-center justify-center hover:bg-blue-600"><h2 className='text-center text-[1.8em]'>実績登録</h2> <div><ExitToAppIcon style={{ fontSize: '6em'}} /></div></div>
-        <div className="w-[300px] bg-blue-500 h-[500px] flex flex-col items-center justify-center  hover:bg-blue-600"><h2 className='text-center text-[1.8em]'>実績検索</h2><div><SearchIcon style={{ fontSize: '6em'}} /></div></div>
-        <div className="w-[300px] bg-blue-500 h-[500px] flex flex-col items-center justify-center hover:bg-blue-600"><h2 className='text-center text-[1.8em]'>実績削除</h2><div><DeleteIcon style={{ fontSize: '6em'}} /></div></div>
+    <div className='sm:flex justify-around w-[90%] m-auto'>
+        <div className="w-[100%] mb-5 py-3 sm:w-[calc(33.33%-20px)]  bg-blue-500 sm:h-[500px] flex flex-col items-center justify-center hover:bg-blue-600"><Link href="/Registration"><h2 className='text-center sm:text-[1.8em]'>実績登録</h2> <div className='text-center'><ExitToAppIcon style={{ fontSize: '5em'}} /></div></Link></div>
+        <div className="w-[100%] mb-5 py-3 sm:w-[calc(33.33%-20px)] bg-blue-500 sm:h-[500px] flex flex-col items-center justify-center  hover:bg-blue-600"><Link href="/Search"><h2 className='text-center sm:text-[1.8em]'>実績検索</h2><div className='text-center'><SearchIcon style={{ fontSize: '5em'}} /></div></Link></div>
+        <div className="w-[100%] mb-5 py-3 sm:w-[calc(33.33%-20px)] bg-blue-500  sm:h-[500px] flex flex-col items-center justify-center hover:bg-blue-600"><Link href="/Delete"><h2 className='text-center sm:text-[1.8em]'>実績削除</h2><div className='text-center'><DeleteIcon style={{ fontSize: '5em'}} /></div></Link></div>
         </div>
   )
 }

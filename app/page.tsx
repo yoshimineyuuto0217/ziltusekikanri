@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <h1 className="text-center text-[2.5em] mb-5">ログイン</h1>
-      <div className="bg-gray-200 w-[800px] h-[800] m-auto p-10">
+      <div className="bg-gray-200 sm:w-[50%] w-[90%] h-[800] m-auto py-10 px-5">
         <form action="">
           <div className="mb-4">
             <label
@@ -54,7 +54,7 @@ export default function Home() {
           <div className="text-right block ">
             <button
               type="submit"
-              className=" w-[200px] bg-blue-500  p-3 hover:bg-blue-600 transition "
+              className=" w-[100%] sm:w-[200px] mb-5 bg-blue-500  p-3 hover:bg-blue-600 transition "
             >
               ログイン
             </button>
