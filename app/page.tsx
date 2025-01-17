@@ -54,13 +54,13 @@ export default function Home() {
           <div className="text-right block ">
             <button
               type="submit"
-              className= " w-[200px] bg-blue-500  p-3 hover:bg-blue-600 transition "
+              className=" w-[200px] bg-blue-500  p-3 hover:bg-blue-600 transition "
             >
               ログイン
             </button>
           </div>
         </form>
-        <p>初めてのご利用の方は<span className="text-blue-500" ><Link href={"/Register"}>こちら</Link></span></p>
+        <p>初めてのご利用の方は<span className="text-blue-500"><Link href="/Register">こちら</Link></span></p>
       </div>
     </>
   );
