@@ -4,13 +4,13 @@ const page = () => {
   return (
     <>
       <h1 className="text-center text-[2.5em] mb-5">新規削除</h1>
-      <form action=""className="bg-red-200 py-10 px-5 sm:w-[50%]  w-[90%] m-auto ">
+      <form action=""className="bg-gray-200 py-10 px-5 sm:max-w-[800px]  w-[90%] m-auto ">
         <div className="sm:flex mb-5 m-auto w-[100%] ">
           <label
             htmlFor="name"
-            className="sm:w-[15%] w-[100%]"
+            className="sm:w-[15%] w-[100%] text-center"
           >
-            製品名：
+            製品名
           </label>
           <input
             type="name"
@@ -23,9 +23,9 @@ const page = () => {
         <div className="sm:flex mb-5 m-auto w-[100%]">
           <label
             htmlFor="name"
-            className="sm:w-[15%]  w-[100%]"
+            className="sm:w-[15%]  w-[100%] text-center"
           >
-            I D：
+            I D
           </label>
           <input
             type="name"
