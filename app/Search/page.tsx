@@ -1,10 +1,11 @@
 import React from 'react'
+import Result from '../components/Result'
 
 const page = () => {
   return (
     <>
       <h1 className="text-center text-[2.5em] mb-5">実績検索</h1>
-      <form action=""className="bg-gray-200 py-10 px-5 sm:max-w-[800px]  w-[90%] m-auto ">
+      <form action=""className="bg-gray-200 py-10 px-5 sm:max-w-[800px]  w-[90%] m-auto mb-20">
         <div className="sm:flex mb-5 m-auto w-[100%] ">
           <label
             htmlFor="name"
@@ -27,6 +28,9 @@ const page = () => {
           検索
         </button>
       </form>
+      <div>
+        <Result/>
+      </div>
     </>
   )
 }

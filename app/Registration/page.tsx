@@ -16,7 +16,7 @@ const page = () => {
             type="name"
             id="name"
             name="name"
-            className="w-[100%] sm:w-[90%] mb-5"
+            className="w-[100%] sm:w-[90%] mb-5 p-2"
           />
           <label htmlFor="name" className="sm:w-[10%] w-[100%]">
             生産数
@@ -25,12 +25,12 @@ const page = () => {
             type="name"
             id="name"
             name="name"
-            className="w-[100%] sm:w-[35%] mb-5 mr-[10%]"
+            className="w-[100%] sm:w-[35%] mb-5 mr-[10%] p-2"
           />
           <label htmlFor="name" className="sm:w-[10%] w-[100%]">
             生産日 
           </label>
-          <input type="name" id="name" name="name" className="w-[100%] sm:w-[35%] mb-5" />
+          <input type="name" id="name" name="name" className="w-[100%] sm:w-[35%] mb-5 p-2" />
           <label htmlFor="name" className="sm:w-[10%] w-[100%]">
             重　量 
           </label>
@@ -38,12 +38,12 @@ const page = () => {
             type="name"
             id="name"
             name="name"
-            className="sm:w-[35%] w-[100%] mb-5 mr-[10%]"
+            className="sm:w-[35%] w-[100%] mb-5 mr-[10%] p-2"
           />
           <label htmlFor="name" className="sm:w-[10%] w-[100%]">
             厚　み 
           </label>
-          <input type="name" id="name" name="name" className="sm:w-[35%] mb-5 w-[100%]" />
+          <input type="name" id="name" name="name" className="sm:w-[35%] mb-5 w-[100%] p-2" />
           <label htmlFor="remarks" className="sm:w-[10%] w-[100%]">
             備考欄 
           </label>
