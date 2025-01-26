@@ -1,9 +1,9 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import Result from '../components/Result'
 import { db } from '@/lib/firebase'
-import { collection, DocumentData, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, DocumentData, getDocs, query, where } from 'firebase/firestore';
 
 const Search = () => {
   const [name, setName] = useState("");
