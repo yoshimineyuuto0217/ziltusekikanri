@@ -21,24 +21,18 @@ const Result: React.FC<ResultProps> = ({ searchResults }) => {
           </tr>
         </thead>
         <tbody>
+          {/* ここで無駄な改行入れない 無駄な改行によるwhitespaceerror出る */}
           {searchResults.map((result, index) => (
             <tr key={index}>
               <td className="border-r border-black text-center">{index + 1}</td>
-              <td className="text-center">
-                {result.month.toDate().toLocaleDateString()}
-              </td>
-              {/* 生産日 */}
-              <td className="text-center">{result.Production}</td>
-              {/* 生産数 */}
+              <td className="text-center">{result.Production ?? "不明"}</td>{/* 生産日 */}
+              <td className="text-center">{result.Production}</td>{/* 生産数 */}
               <td className="text-center">{result.weight}</td> {/* 重量 */}
-              <td className="text-center">{result.height}</td>
-              {/* 厚み (hight → heightに修正) */}
-              <td className="text-center">{result.temperature}</td>
-              {/* 焼成温度 */}
-              <td className="text-center">{result.comment}</td>
-            </tr>
-          ))}
-        </tbody>{" "}
+              <td className="text-center">{result.height}</td>{/* 厚み (hight → heightに修正) */}
+              <td className="text-center">{result.temperature}</td>{/* 焼成温度 */}
+              <td className="text-center">{result.comment}</td>{/* 備考欄 */}
+            </tr>))}
+        </tbody>
       </table>
     </div>
   );
