@@ -1,6 +1,11 @@
+import { DocumentData } from 'firebase/firestore';
 import React from 'react'
 
-const Result = () => {
+type ResultProps = {
+  searchResults: DocumentData[]; // 親から渡されるデータの型を指定
+};
+
+const Result: React.FC<ResultProps>  = ({searchResults}) => {
   return (
     <div className='overflow-hidden overflow-x-auto md:overflow-visible'>
     <table className='sm:m-auto w-[1000px] m-4'>
@@ -16,14 +21,19 @@ const Result = () => {
         </tr>
         </thead>
         <tbody>
-            <th className='border-r border-black'>1</th>
-            <th>2024/01/15</th>
-            <th>10000</th>
-            <th>1500g</th>
-            <th>10mm</th>
-            <th>1600C°</th>
-            <th>焼成温度にきおつけてください</th>
-        </tbody>
+  {searchResults.map((result, index) => (
+    <tr key={index} >
+      <td className="border-r border-black text-center">{index + 1}</td>
+      <td className='text-center'>  {result.month.toDate().toLocaleDateString()}</td> {/* 生産日 */}
+      <td className='text-center'>{result.Production}</td> {/* 生産数 */}
+      <td className='text-center'>{result.weight}</td> {/* 重量 */}
+      <td className='text-center'>{result.height}</td> {/* 厚み (hight → heightに修正) */}
+      <td className='text-center'>{result.temperature}</td> {/* 焼成温度 */}
+      <td className='text-center'>{result.comment}</td> {/* 備考 */}
+    </tr>
+  ))}
+</tbody>
+
     </table>
     </div>
   )
