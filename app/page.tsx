@@ -36,7 +36,7 @@ export default function Home() {
               placeholder="example@example.com"
             />
           </div>
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <label
               htmlFor="password"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -50,7 +50,7 @@ export default function Home() {
               className="w-full p-3 border border-gray-300  focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="••••••••"
             />
-          </div>
+          </div> */}
           <div className="text-right block ">
             <button
               type="submit"
