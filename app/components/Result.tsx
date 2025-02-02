@@ -6,6 +6,10 @@ type ResultProps = {
 };
 
 const Result: React.FC<ResultProps> = ({ searchResults }) => {
+  const sortedResults = [...searchResults].sort((a, b) => {
+    // IDを基準に降順に並び替える 
+    return b.id - a.id;
+  });
   return (
     <div className="overflow-hidden overflow-x-auto md:overflow-visible">
       <table className="sm:m-auto w-[1000px] m-4">
@@ -22,15 +26,16 @@ const Result: React.FC<ResultProps> = ({ searchResults }) => {
         </thead>
         <tbody>
           {/* ここで無駄な改行入れない 無駄な改行によるwhitespaceerror出る */}
-          {searchResults.map((result, index) => (
+          {/* tdタグの外で書いたことでwhitespaceエラー出てる */}
+          {sortedResults.map((result, index) => (
             <tr key={index}>
-              <td className="border-r border-black text-center">{index + 1}</td>
-              <td className="text-center">{result.Production ?? "不明"}</td>{/* 生産日 */}
-              <td className="text-center">{result.Production}</td>{/* 生産数 */}
-              <td className="text-center">{result.weight}</td> {/* 重量 */}
-              <td className="text-center">{result.height}</td>{/* 厚み (hight → heightに修正) */}
-              <td className="text-center">{result.temperature}</td>{/* 焼成温度 */}
-              <td className="text-center">{result.comment}</td>{/* 備考欄 */}
+              <td className="border-r border-black text-center">{result.id}</td>
+              <td className="text-center">{result.Production ?? "不明"/* 生産日 */}</td>
+              <td className="text-center">{result.Production /* 生産数 */}</td>
+              <td className="text-center">{result.weight /* 重量 */}</td> 
+              <td className="text-center">{result.height /* 厚み*/}</td>
+              <td className="text-center">{result.temperature /* 焼成温度 */}c°</td>
+              <td className="text-center">{result.comment /* 備考欄 */}</td>
             </tr>))}
         </tbody>
       </table>
