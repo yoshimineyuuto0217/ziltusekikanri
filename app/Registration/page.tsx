@@ -1,6 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const page = () => {
+
   return (
     <>
       <h1 className="text-center text-[2.5em] mb-5">新規登録</h1>
