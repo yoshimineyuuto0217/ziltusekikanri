@@ -6,8 +6,8 @@ import React, { useState } from "react";
 
 const Delete = () => {
   const [productname,setProductName] = useState("")
-  const [id, setId] = useState<number>(0);
-
+  const [id, setId] = useState<number | null>(null);
+  const [message, setMessage] = useState("")
   const handleDelete = async(event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -19,6 +19,9 @@ const Delete = () => {
       for (const doc of snapshot.docs) {
         await deleteDoc(doc.ref); // 各ドキュメントを削除
       }
+      setMessage ("削除されました");
+      setId(null);
+      setProductName("")
     } catch (error) {
       console.log("データ削除に失敗してます", error);
     }
@@ -26,7 +29,7 @@ const Delete = () => {
   return (
     <>
       <h1 className="text-center text-[2.5em] mb-5">新規削除</h1>
-      <form action=""className="bg-gray-200 py-10 px-5 sm:max-w-[800px]  w-[90%] m-auto " onSubmit={handleDelete}>
+      <form action=""className="bg-gray-200 py-10 px-5 sm:max-w-[800px]  w-[90%] m-auto mb-5 " onSubmit={handleDelete}>
         <div className="sm:flex mb-5 m-auto w-[100%] ">
           <label
             htmlFor="name"
@@ -57,8 +60,11 @@ const Delete = () => {
             name="name"
             placeholder="製品IDを入れてください"
             className="sm:w-[85%] w-[100%]"
-            value={id}
-            onChange={(e) => setId(e.target.value === "" ? 0 : Number(e.target.value))}
+            value={id === null ? "" : id}
+            onChange={(e) => {
+              const value = e.target.value;
+              setId(value === null ? null : Number(value)); 
+            }}
           />
         </div> 
         <button
@@ -68,6 +74,9 @@ const Delete = () => {
           削除
         </button>
       </form>
+      <div className=" text-center font-light">
+        {message && <p>{message}</p>}
+      </div>
     </>
   );
 };

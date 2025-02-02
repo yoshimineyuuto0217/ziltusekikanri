@@ -16,7 +16,7 @@ const Search = () => {
     try {
       const searchQuery = query(
         collection(db, "registr"),
-        where("name", "==", name) // 修正: "setName"ではなく、変数`name`を使う
+        where("name", "==", name) 
       );
 
       const querySnapshot = await getDocs(searchQuery);
