@@ -7,7 +7,6 @@ import React, { useState } from "react";
 const Delete = () => {
   const [productname,setProductName] = useState("")
   const [id, setId] = useState<number | null>(null);
-  const [message, setMessage] = useState("")
   const handleDelete = async(event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -15,15 +14,19 @@ const Delete = () => {
       const req = query(Ref, where("name", "==", productname), where("id", "==", id));
       const snapshot = await getDocs(req);
       
+      if (snapshot.empty) {
+        window.confirm("その製品は存在しません")
+        return;
+      }
       // forEach ではなく for...of を使って非同期処理を待つ
       for (const doc of snapshot.docs) {
         await deleteDoc(doc.ref); // 各ドキュメントを削除
       }
-      setMessage ("削除されました");
+      window.confirm(`製品：${productname} ID: ${id} を削除しました`);
       setId(null);
       setProductName("")
     } catch (error) {
-      console.log("データ削除に失敗してます", error);
+      console.error("データ削除に失敗しました", error);
     }
   }
   return (
@@ -33,7 +36,7 @@ const Delete = () => {
         <div className="sm:flex mb-5 m-auto w-[100%] ">
           <label
             htmlFor="name"
-            className="sm:w-[15%] w-[100%] text-center"
+            className="sm:w-[15%] w-[100%] text-center "
           >
             製品名
           </label>
@@ -43,6 +46,7 @@ const Delete = () => {
             name="name"
             placeholder="製品名を入れてください"
             className="sm:w-[85%] w-[100%]"
+            required
             value={productname}
             onChange={(e)=> setProductName(e.target.value)}
           />
@@ -50,16 +54,17 @@ const Delete = () => {
         <div className="sm:flex mb-5 m-auto w-[100%]">
           <label
             htmlFor="name"
-            className="sm:w-[15%]  w-[100%] text-center"
+            className="sm:w-[15%]  w-[100%] text-center  "
           >
             I D
           </label>
           <input
-            type="name"
+            type="number"
             id="name"
             name="name"
             placeholder="製品IDを入れてください"
             className="sm:w-[85%] w-[100%]"
+            required
             value={id === null ? "" : id}
             onChange={(e) => {
               const value = e.target.value;
@@ -74,9 +79,6 @@ const Delete = () => {
           削除
         </button>
       </form>
-      <div className=" text-center font-light">
-        {message && <p>{message}</p>}
-      </div>
     </>
   );
 };

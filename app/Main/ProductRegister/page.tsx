@@ -46,6 +46,7 @@ const ProductRegister = () => {
           production: production,
           month: month,
           weight: weight,
+          height: height,
           comment: comment,
           temperature: temperature,
         });
@@ -59,7 +60,7 @@ const ProductRegister = () => {
         setHeight("");
         setWeight("");
         setProductName("");
-        console.log("日付がリセットされました",)
+        window.confirm("製品の登録ができました");
       } else {
         const docRef = await addDoc(collection(db, "registr"), {
           id: 1,
@@ -111,16 +112,18 @@ const ProductRegister = () => {
             value={productname}
             onChange={(e) => setProductName(e.target.value)}
             className="w-[100%] sm:w-[35%] mb-5 mr-[10%] p-2"
+            required
           />
           <label htmlFor="name" className="sm:w-[10%] w-[100%] p-2">
             温　度
           </label>
           <input
-            type="name"
+            type="number"
             id="name"
             name="name"
             placeholder="1200"
             className="sm:w-[35%] mb-5 w-[100%] p-2"
+            required
             value={temperature === null ? "" : temperature}
             onChange={(e) => {
               const value = e.target.value;
@@ -131,10 +134,11 @@ const ProductRegister = () => {
             生産数
           </label>
           <input
-            type="name"
+            type="number"
             id="name"
             name="name"
             placeholder="3000"
+            required
             value={production === null ? "": production}
             onChange={(e) => {
               const value = e.target.value;
@@ -146,11 +150,12 @@ const ProductRegister = () => {
             生産日
           </label>
           <input
-            
+            type="date"
             id="month"
             name="month"
             placeholder="2025-01-17"
             className="w-[100%] sm:w-[35%] mb-5 p-2"
+            required
             value={month ? month.toDate().toISOString().split("T")[0] : ""}
             onChange={handleMonthChange}
           />
@@ -163,6 +168,7 @@ const ProductRegister = () => {
             name="name"
             placeholder="1000mg"
             className="sm:w-[35%] w-[100%] mb-5 mr-[10%] p-2"
+            required
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
           />
@@ -175,6 +181,7 @@ const ProductRegister = () => {
             name="name"
             className="sm:w-[35%] mb-5 w-[100%] p-2"
             placeholder="1000mm"
+            required
             value={height}
             onChange={(e) => setHeight(e.target.value)}
           />

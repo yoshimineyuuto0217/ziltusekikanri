@@ -60,7 +60,7 @@ export default function Home() {
             </button>
           </div>
         </form>
-        <p>初めてのご利用の方は<span className="text-blue-500"><Link href="/Register">こちら</Link></span></p>
+        <p>初めてのご利用の方は<span className="text-blue-500"><Link href="/UserRegister">こちら</Link></span></p>
       </div>
     </>
   );
