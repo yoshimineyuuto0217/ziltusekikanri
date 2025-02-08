@@ -5,7 +5,7 @@ export default function Home() {
     <>
       <h1 className="text-center text-[2.5em] mb-5">ログイン</h1>
       <div className="bg-gray-200 sm:w-[50%] w-[90%] h-[800] m-auto py-10 px-5">
-        <form action="">
+        <form>
           <div className="mb-4">
             <label
               htmlFor="name"
@@ -14,7 +14,7 @@ export default function Home() {
               名前
             </label>
             <input
-              type="name"
+              type="text"
               id="name"
               name="name"
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -29,9 +29,9 @@ export default function Home() {
               メールアドレス
             </label>
             <input
-              type="name"
-              id="name"
-              name="name"
+              type="text"
+              id="email"
+              name="email"
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="example@example.com"
             />

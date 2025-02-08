@@ -14,7 +14,7 @@ const UserRegister = () => {
               名前
             </label>
             <input
-              type="name"
+              type="text"
               id="name"
               name="name"
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -29,9 +29,9 @@ const UserRegister = () => {
               メールアドレス
             </label>
             <input
-              type="name"
-              id="name"
-              name="name"
+              type="text"
+              id="email"
+              name="email"
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="example@example.com"
             />
