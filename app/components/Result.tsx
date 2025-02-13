@@ -72,7 +72,7 @@ const Result: React.FC<ResultProps> = ({ searchResults }) => {
               <td className="text-center">{result.height}</td>
               <td className="text-center">{result.temperature}c°</td>
               <td className="text-center">{result.comment}</td>
-              <td className="text-center" onClick={() => handleDelete(result.id , result.name)}><DeleteIcon/></td>
+              <td className="text-center" onClick={() => handleDelete(result.id , result.name)}><DeleteIcon className="text-gray-500 hover:text-gray-800"/></td>
             </tr>
           ))}
         </tbody>
