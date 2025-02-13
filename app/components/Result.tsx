@@ -2,18 +2,19 @@
 
 import { DocumentData } from "firebase/firestore";
 import ReactPaginate, { ReactPaginateProps } from "react-paginate";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { handleDelete } from "@/utils/handleDelete";
 
 type ResultProps = {
   searchResults: DocumentData[];
+  setSearchResults: React.Dispatch<React.SetStateAction<DocumentData[]>>;
 };
 
-const Result: React.FC<ResultProps> = ({ searchResults }) => {
+const Result: React.FC<ResultProps> = ({ searchResults ,setSearchResults}) => {
+
   // IDを基準に降順ソート
   const sortedResults = [...searchResults].sort((a, b) => b.id - a.id);
-
   const [itemOffset, setItemOffset] = useState(0);
 
   // ページネーション処理
@@ -27,10 +28,16 @@ const Result: React.FC<ResultProps> = ({ searchResults }) => {
   const handlePageClick: ReactPaginateProps["onPageChange"] = (event) => {
     const newOffset = (event.selected * itemPerPage) % sortedResults.length;
     setItemOffset(newOffset);
-
-    
   };
-
+   // utilsでかいてるhandleDeleteをonDeleteで囲む
+  // 削除処理（削除後に即時反映）
+  const onDelete = useCallback(
+    async (id: number, name: string) => {
+      await handleDelete(id, name);
+      setSearchResults((prevResults) => prevResults.filter((item) => item.id !== id));
+    },
+    [setSearchResults]
+  );
   return (
     <div className="overflow-hidden overflow-x-auto md:overflow-visible">
       <table className="sm:m-auto w-[1000px] m-4 ">
@@ -72,7 +79,7 @@ const Result: React.FC<ResultProps> = ({ searchResults }) => {
               <td className="text-center">{result.height}</td>
               <td className="text-center">{result.temperature}c°</td>
               <td className="text-center">{result.comment}</td>
-              <td className="text-center" onClick={() => handleDelete(result.id , result.name)}><DeleteIcon className="text-gray-500 hover:text-gray-800"/></td>
+              <td className="text-center" onClick={() => onDelete(result.id , result.name)}><DeleteIcon className="text-gray-500 hover:text-gray-800"/></td>
             </tr>
           ))}
         </tbody>

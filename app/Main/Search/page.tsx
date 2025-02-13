@@ -32,7 +32,7 @@ const Search = () => {
 
   return (
     <>
-      <h1 className="text-center text-[2.5em] mb-5">実績検索</h1>
+      <h1 className="text-center text-[2.5em] mb-5">実績検索・削除</h1>
       <div className="bg-gray-200 py-10 px-5 sm:max-w-[800px]  w-[90%] m-auto mb-20">
         <div className="sm:flex mb-5 m-auto w-[100%] ">
           <label htmlFor="name" className="sm:w-[15%] w-[100%] text-center ">製品名</label>
@@ -42,7 +42,7 @@ const Search = () => {
           検索
         </button>
       </div>
-      <div><Result searchResults={search}/></div>
+      <div><Result searchResults={search} setSearchResults={setSearch}/></div>
     </>
   );
 }
