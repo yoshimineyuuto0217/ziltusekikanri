@@ -2,6 +2,7 @@
 
 import React, {useState } from 'react'
 import Result from '../../components/Result'
+
 import { db } from '@/lib/firebase'
 import { collection, DocumentData, getDocs, query, where } from 'firebase/firestore';
 
@@ -41,7 +42,7 @@ const Search = () => {
           検索
         </button>
       </div>
-      <div><Result searchResults={search} /></div>
+      <div><Result searchResults={search}/></div>
     </>
   );
 }
