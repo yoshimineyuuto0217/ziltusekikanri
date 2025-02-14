@@ -1,11 +1,11 @@
-// idの重複が原因でハイドレーションエラー
-import Link from "next/link";
-export default function Home() {
+import React from 'react'
+
+const UserRegister = () => {
   return (
     <>
-      <h1 className="text-center text-[2.5em] mb-5">ログイン</h1>
-      <div className="bg-gray-200 sm:w-[50%] w-[90%] h-[80%] m-auto py-10 px-5">
-        <form>
+      <h1 className="text-center text-[2.5em] mb-5">新規登録</h1>
+      <div className="bg-gray-200 sm:w-[50%] w-[90%] h-[800] m-auto py-10 px-5">
+        <form action="">
           <div className="mb-4">
             <label
               htmlFor="name"
@@ -54,16 +54,15 @@ export default function Home() {
           <div className="text-right block ">
             <button
               type="submit"
-              className=" w-[100%] sm:w-[200px] mb-5 bg-blue-500  p-3 hover:bg-blue-600 transition "
+               className=" w-[100%] sm:w-[200px] mb-5 bg-blue-500  p-3 hover:bg-blue-600 transition "
             >
-              ログイン
+              登録
             </button>
           </div>
         </form>
-        {/* 間違った書き方構造が変 */}
-        {/* <p>初めてのご利用の方は<span className="text-blue-500"><Link href="/UserRegister">こちら</Link></span></p> */}
-        <p>アカウントをお持ちでない方は <Link className="text-blue-500" href="/signup">こちらから登録</Link></p>
       </div>
     </>
-  );
+  )
 }
+
+export default UserRegister
