@@ -3,11 +3,13 @@
 import { signIn } from "next-auth/react"; // NextAuthのsignInメソッドをインポート
 import { useState } from "react";
 import Link from "next/link";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function Home() {
   const [username, setUsername] = useState(""); // ユーザー名
   const [password, setPassword] = useState(""); // パスワード
   const [error, setError] = useState(""); // エラーメッセージ
+  const [ icon , setIcon ] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,7 +47,7 @@ export default function Home() {
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="山田太郎"
               value={username}
-              onChange={(e) => setUsername(e.target.value)} // 入力時にusernameを更新
+              onChange={(e) => setUsername(e.target.value.replace(/\s+/g, ""))} // 入力時にusernameを更新
             />
           </div>
           <div className="mb-6">
@@ -55,15 +57,20 @@ export default function Home() {
             >
               パスワード
             </label>
+            <div className="relative">
             <input
-              type="password"
+              type = {icon ? "text" : "password"}
               id="password"
               name="password"
-              className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500  "
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)} // 入力時にpasswordを更新
             />
+            <button type="button" className="text-black-50 absolute top-1/2 -translate-y-1/2 p-3 right-1" onClick={()=>setIcon((prev)=> !prev)}>
+              {icon ? <EyeOffIcon size={20} /> : <EyeIcon size={20} /> }
+            </button>
+            </div>
           </div>
           {error && <p className="text-red-500">{error}</p>} {/* エラーメッセージ表示 */}
           <div className="text-right block ">

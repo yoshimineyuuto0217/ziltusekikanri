@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest) {
     const { pathname } = new URL(req.url);
 
     // ユーザーが未認証で保護されたページにアクセスした場合
-    if (!token && pathname !== "/") {
+    if (!token && pathname !== "/" && pathname !== "/signup") {
         return NextResponse.redirect(new URL("/", req.url));
     }
 

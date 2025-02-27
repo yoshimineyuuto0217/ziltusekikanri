@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const UserRegister = () => {
   const [formData, setFormData] = useState({
@@ -9,11 +10,20 @@ const UserRegister = () => {
     email: "",
     password: "",
   });
+  const [ icon , setIcon ] = useState(false);
 
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+  
+    setFormData({
+      ...formData,
+      [name]: name === "name" ? value.replace(/\s+/g, "") : value, // 名前入力時に空白を削除
+    });
   };
-
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -45,7 +55,7 @@ const UserRegister = () => {
   return (
     <>
       <h1 className="text-center text-[2.5em] mb-5">新規登録</h1>
-      <div className="bg-gray-200 sm:w-[50%] w-[90%] h-[800px] m-auto py-10 px-5">
+      <div className="bg-gray-200 sm:w-[50%] w-[90%] h-[80%] m-auto py-10 px-5">
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -81,8 +91,9 @@ const UserRegister = () => {
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
               パスワード
             </label>
+            <div className="relative">
             <input
-              type="password"
+              type = {icon ? "text" : "password"}
               id="password"
               name="password"
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -91,6 +102,10 @@ const UserRegister = () => {
               onChange={handleChange}
               required
             />
+            <button type="button" className="text-black-50 absolute top-1/2 -translate-y-1/2 p-3 right-1" onClick={()=>setIcon((prev)=> !prev)}>
+              {icon ? <EyeOffIcon size={20} /> : <EyeIcon size={20} /> }
+            </button>
+            </div>
           </div>
           <div className="text-right block">
             <button type="submit" className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition">
