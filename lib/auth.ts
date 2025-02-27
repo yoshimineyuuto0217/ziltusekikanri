@@ -7,6 +7,8 @@ import { prisma } from "@/prisma";
 
 
 export const config: NextAuthConfig = {
+  // jwtを全体で使うときはsecret設定が必要
+    secret: process.env.NEXTAUTH_SECRET,
     adapter: PrismaAdapter(prisma),
     session: {
         strategy: "jwt",
@@ -22,6 +24,7 @@ export const config: NextAuthConfig = {
           // ログイン成功時に product ページにリダイレクト
           if (user) {
             return true;  // ログイン成功
+            
           }
           return false;  // ログイン失敗
         },
