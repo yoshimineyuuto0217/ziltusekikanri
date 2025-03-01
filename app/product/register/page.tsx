@@ -1,16 +1,9 @@
 "use client";
 
+import Button from "@/components/Button";
 import { db } from "@/lib/firebase";
-import {
-  addDoc,
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  Timestamp,
-  where,
-} from "firebase/firestore";
+import { handleMonthChange } from "@/utils/handleMonthChange";
+import { addDoc,collection,getDocs,limit,orderBy,query,Timestamp,where,} from "firebase/firestore";
 import React, { useState } from "react";
 
 const ProductRegister = () => {
@@ -32,7 +25,7 @@ const ProductRegister = () => {
         orderBy("id", "desc"),
         limit(1)
       );
-      // getdocsはコレクション内の全ての全てのドキュメントを持ってくる
+      // getDocsはコレクション内の全ての全てのドキュメントを持ってくる
       const querySnapshot = await getDocs(q);
       // docsは全てのドキュメントを持ってくる意味
       const lastDoc = querySnapshot.docs[0];
@@ -82,19 +75,6 @@ const ProductRegister = () => {
       console.error("データ登録時にエラーが発生しました:", error);
     }
   };
-
-  const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("入力された日付:", e.target.value);
-    const inputValue = e.target.value;  // 例: "2025-02-05"
-    const [year, monthStr, dayStr] = inputValue.split('-');
-    const monthNum = parseInt(monthStr, 10) - 1;  // 月は0から始まるので-1
-    const dayNum = parseInt(dayStr, 10); // 日を取得
-    const date = new Date(Number(year), monthNum, dayNum); // 新しいDateオブジェクトを作成
-    const newTimestamp = Timestamp.fromDate(date);
-    console.log("変換後の Timestamp:", newTimestamp);
-    setMonth(newTimestamp); // DateオブジェクトをTimestampに変換してsetMonth
-  };
-  
 
   return (
     <>
@@ -162,7 +142,7 @@ const ProductRegister = () => {
             className="w-[100%] sm:w-[35%] mb-5 p-2"
             required
             value={month ? month.toDate().toISOString().split("T")[0] : ""}
-            onChange={handleMonthChange}
+            onChange={(e) => handleMonthChange(e, setMonth)}
           />
           <label htmlFor="name" className="sm:w-[10%] w-[100%] p-2">
             重　量
@@ -202,12 +182,7 @@ const ProductRegister = () => {
             onChange={(e) => setComment(e.target.value)}
           />
         </div>
-        <button
-          type="submit"
-          className=" w-[100%]  mb-5 bg-blue-500  p-3 hover:bg-blue-600 transition "
-        >
-          登録
-        </button>
+        <Button name={"登録"} className="w-[100%]  mb-5 bg-blue-500  p-3 hover:bg-blue-600 transition " />
       </form>
     </>
   );

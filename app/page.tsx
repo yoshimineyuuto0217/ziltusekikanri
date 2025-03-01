@@ -3,7 +3,8 @@
 import { signIn } from "next-auth/react"; // NextAuthのsignInメソッドをインポート
 import { useState } from "react";
 import Link from "next/link";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import Button from "@/components/Button";
+import EyeButton from "@/components/EyeButton";
 
 export default function Home() {
   const [username, setUsername] = useState(""); // ユーザー名
@@ -67,19 +68,12 @@ export default function Home() {
               value={password}
               onChange={(e) => setPassword(e.target.value)} // 入力時にpasswordを更新
             />
-            <button type="button" className="text-black-50 absolute top-1/2 -translate-y-1/2 p-3 right-1" onClick={()=>setIcon((prev)=> !prev)}>
-              {icon ? <EyeOffIcon size={20} /> : <EyeIcon size={20} /> }
-            </button>
+            <EyeButton icon={icon} setIcon={setIcon}/>
             </div>
           </div>
           {error && <p className="text-red-500">{error}</p>} {/* エラーメッセージ表示 */}
           <div className="text-right block ">
-            <button
-              type="submit"
-              className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition"
-            >
-              ログイン
-            </button>
+          <Button name={"ログイン"} className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition"/>
           </div>
         </form>
         <p>アカウントをお持ちでない方は <Link className="text-blue-500" href="/signup">こちらから登録</Link></p>
