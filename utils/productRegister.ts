@@ -1,4 +1,3 @@
-// src/hooks/useProductRegister.ts
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 

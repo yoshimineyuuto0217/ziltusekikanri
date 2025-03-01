@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import Button from "@/components/Button";
+import EyeButton from "@/components/EyeButton";
 
 const UserRegister = () => {
   const [formData, setFormData] = useState({
@@ -10,11 +11,9 @@ const UserRegister = () => {
     email: "",
     password: "",
   });
+  
   const [ icon , setIcon ] = useState(false);
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
   
@@ -102,16 +101,10 @@ const UserRegister = () => {
               onChange={handleChange}
               required
             />
-            <button type="button" className="text-black-50 absolute top-1/2 -translate-y-1/2 p-3 right-1" onClick={()=>setIcon((prev)=> !prev)}>
-              {icon ? <EyeOffIcon size={20} /> : <EyeIcon size={20} /> }
-            </button>
+            <EyeButton icon={icon} setIcon={setIcon}/>
             </div>
           </div>
-          <div className="text-right block">
-            <button type="submit" className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition">
-              登録
-            </button>
-          </div>
+          <Button name={"登録"} className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition"/>
         </form>
       </div>
     </>
