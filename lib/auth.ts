@@ -20,19 +20,21 @@ export const config: NextAuthConfig = {
     async session({ session, token }) {
       if (token) {
         session.user = {
-          id: token.id,
-          name: token.name,
-          email: token.email,
+          id: token.id as string,
+          name: token.name as string,
+          email: token.email as string ,
+          emailVerified: null,
         };
       }
       return session;
     },
 
     async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.name = user.username; // `name` を `username` に置き換え
-        token.email = user.email;
+      if (user && typeof user === "object") {
+        const typedUser = user as { id: string; username: string; email: string };
+        token.id = typedUser.id;
+        token.name = typedUser.username;
+        token.email = typedUser.email;
       }
       return token;
     },
