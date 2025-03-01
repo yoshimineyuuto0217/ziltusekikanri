@@ -33,6 +33,7 @@ const ProductRegister = () => {
       const lastDoc = querySnapshot.docs[0];
       const newId = lastDoc ? lastDoc.data().id + 1 : 1;
 
+      //addDocを使うときはフィールド名だけを書けばいい addDocがあることでuseStateの値が切り替わってる
       await addDoc(collection(db, "registr"), {
         id: newId,
         name: productName,

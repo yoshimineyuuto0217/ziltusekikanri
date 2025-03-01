@@ -4,14 +4,9 @@ import React, { useEffect, useState } from "react";
 
 
 import { db } from "@/lib/firebase";
-import {
-  collection,
-  DocumentData,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, DocumentData, getDocs,} from "firebase/firestore";
 import Result from "@/components/Result";
+import { handleSearch } from "@/utils/handleSearch";
 
 const Search = () => {
   const [name, setName] = useState("");
@@ -22,8 +17,9 @@ const Search = () => {
       try {
         const querySnapshot = await getDocs(collection(db, "registr"));
         const results = querySnapshot.docs.map((doc) => ({
+          docId : doc.id,
           ...doc.data(),
-          uniqueKey: `${doc.data().name}-${doc.data().id}`, // name + id を組み合わせてキーを一意にする
+          uniqueKey: `${doc.data().name}-${doc.data().id}`, // name + id を組み合わせてキーを一意にする 自分で組み合わせて作る
         }));
         setSearch(results);
       } catch (error) {
@@ -32,26 +28,6 @@ const Search = () => {
     };
     fetchAllData();
   }, []);
-
-  const handleSearch = async () => {
-    // 検索欄がからだった場合
-    // if (!name.trim()) return;
-    try {
-      const searchQuery = query(
-        collection(db, "registr"),
-        where("name", "==", name)
-      );
-      const querySnapshot = await getDocs(searchQuery);
-      if (querySnapshot.empty) {
-        window.confirm(`${name}は存在しません`);
-        return;
-      }
-      const results = querySnapshot.docs.map((doc) => doc.data());
-      setSearch(results); // 結果を取得して状態にセット
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
 
   return (
     <>
@@ -74,7 +50,7 @@ const Search = () => {
         <button
           type="submit"
           className=" w-[100%] bg-blue-500  p-3 hover:bg-blue-600 transition"
-          onClick={handleSearch}
+          onClick={()=>handleSearch(setSearch)}
         >
           検索
         </button>
@@ -87,3 +63,6 @@ const Search = () => {
 };
 
 export default Search;
+
+;
+
