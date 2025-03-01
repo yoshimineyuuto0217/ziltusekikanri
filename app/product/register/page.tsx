@@ -14,21 +14,21 @@ import {
 import React, { useState } from "react";
 
 const ProductRegister = () => {
-  const [productname, setProductName] = useState("");
+  const [productName, setProductName] = useState("");
   const [production, setProduction] = useState<number | null >(null);
   const [month, setMonth] = useState<Timestamp | undefined >( undefined );
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [comment, setComment] = useState("");
   const [temperature, setTemperature] = useState<number | null>(null);
-
+  
   const productRegister = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       // queryで二つのフィールドを作るときはfirebaseでインデックス設定をする
       const q = query(
         collection(db, "registr"),
-        where("name", "==", productname),
+        where("name", "==", productName),
         orderBy("id", "desc"),
         limit(1)
       );
@@ -39,10 +39,9 @@ const ProductRegister = () => {
 
       if (lastDoc) {
         const newId = lastDoc.data().id + 1;
-        // const docRef = doc(db, "registr", lastDoc.id);
         const docRef = await addDoc(collection(db, "registr"), {
           id: newId,
-          name: productname,
+          name: productName,
           production: production,
           month: month,
           weight: weight,
@@ -50,9 +49,7 @@ const ProductRegister = () => {
           comment: comment,
           temperature: temperature,
         });
-        console.log(
-          `新しい製品を登録しました: ID ${newId}, ドキュメントID: ${docRef.id}`
-        );
+        console.log(docRef);
         setComment("");
         setTemperature(null);
         setProduction(null);
@@ -60,20 +57,26 @@ const ProductRegister = () => {
         setHeight("");
         setWeight("");
         setProductName("");
-        window.confirm("製品の登録ができました");
+        window.alert(`新しい製品を登録しました: ID ${newId}, 製品名: ${productName}`);
       } else {
         const docRef = await addDoc(collection(db, "registr"), {
           id: 1,
-          name: productname,
+          name: productName,
           production: production,
           month: month,
           weight: weight,
           comment: comment,
           temperature: temperature,
         });
-        console.log(
-          `新しい製品を登録しました: ID 1, ドキュメントID: ${docRef.id}`
-        );
+        console.log(docRef);
+        setComment("");
+        setTemperature(null);
+        setProduction(null);
+        setMonth(undefined);
+        setHeight("");
+        setWeight("");
+        setProductName("");
+        window.alert(`新しい製品を登録しました: ID ${"1"}, 製品名: ${productName}`);
       }
     } catch (error) {
       console.error("データ登録時にエラーが発生しました:", error);
@@ -109,7 +112,7 @@ const ProductRegister = () => {
             placeholder="製品名を入力"
             id="name"
             name="name"
-            value={productname}
+            value={productName}
             onChange={(e) => setProductName(e.target.value)}
             className="w-[100%] sm:w-[35%] mb-5 mr-[10%] p-2"
             required
@@ -121,6 +124,7 @@ const ProductRegister = () => {
             type="number"
             id="name"
             name="name"
+            min="0"
             placeholder="1200"
             className="sm:w-[35%] mb-5 w-[100%] p-2"
             required
@@ -137,6 +141,7 @@ const ProductRegister = () => {
             type="number"
             id="name"
             name="name"
+            min="0"
             placeholder="3000"
             required
             value={production === null ? "": production}

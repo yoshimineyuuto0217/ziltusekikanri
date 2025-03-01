@@ -1,75 +1,84 @@
 import NextAuth, { NextAuthConfig } from "next-auth";
-// import Credentials from "next-auth/providers/credentials";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import bcrypt from 'bcryptjs';
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import bcrypt from "bcryptjs";
 import { prisma } from "@/prisma";
 
-
 export const config: NextAuthConfig = {
-  // jwtを全体で使うときはsecret設定が必要
-    secret: process.env.NEXTAUTH_SECRET,
-    adapter: PrismaAdapter(prisma),
-    session: {
-        strategy: "jwt",
-        maxAge: 3600, // 1時間 (3600秒) の有効期限
-      },
-      pages: {
-        signIn: "/", // カスタムのサインインページ
-      },
-    //   ログインしてる時の対応
-    callbacks: {
-        // サインイン後の処理
-        async signIn({ user }) {
-          // ログイン成功時に product ページにリダイレクト
-          if (user) {
-            return true;  // ログイン成功
-            
-          }
-          return false;  // ログイン失敗
-        },
-        async redirect({ url, baseUrl }) {
-          // リダイレクト先を /product に固定
-          if (url === baseUrl) {
-            return `${baseUrl}/product`;
-          }
-          return url;  // 他のリダイレクト先があればそのまま使用
-        },
-      },
-    providers: [
-    CredentialsProvider ({
-        name: "Credentials",
-        credentials:{
-            username: {label: "Username",type: "text"},
-            password: {label: "Password", type: "password"},
-            email: { label: "Email", type: "text" },
-        },
-        async authorize( credentials) {
-            const { username, password, email } = credentials as { username: string; password: string; email?: string };
+  secret: process.env.NEXTAUTH_SECRET,
+  adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: "jwt",
+    maxAge: 3600, // 1時間 (3600秒) の有効期限
+  },
+  pages: {
+    signIn: "/", // カスタムのサインインページ
+  },
 
-            if (email) {
-                // email がある場合は新規登録フロー
-                let user = await prisma.user.findUnique({ where: { username } });
-                if (user) {
-                  throw new Error("ユーザーはすでに存在します");
-                }
-                const hashedPassword = await bcrypt.hash(password, 10);
-                user = await prisma.user.create({
-                  data: { username, email, password: hashedPassword },
-                });
-                return { ...user, id: user.id.toString() };
-              } else {
-                const user = await prisma.user.findUnique({ where: { username } });
-    if (user && await bcrypt.compare(password, user.password)) {
-      return { ...user, id: user.id.toString() };
-    }
-    return null;
-              }
+  // ✅ コールバック関数を修正
+  callbacks: {
+    async session({ session, token }) {
+      if (token) {
+        session.user = {
+          id: token.id,
+          name: token.name,
+          email: token.email,
+        };
+      }
+      return session;
+    },
+
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.username; // `name` を `username` に置き換え
+        token.email = user.email;
+      }
+      return token;
+    },
+
+    async redirect({ url }) {
+      return url.startsWith("/") ? `/product` : url; // リダイレクト処理を修正
+    },
+  },
+
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" },
+        email: { label: "Email", type: "text", optional: true },
+      },
+      async authorize(credentials) {
+        const { username, password, email } = credentials as {
+          username: string;
+          password: string;
+          email?: string;
+        };
+
+        // ✅ 新規登録処理
+        if (email) {
+          let user = await prisma.user.findUnique({ where: { username } });
+          if (user) {
+            throw new Error("ユーザーはすでに存在します");
+          }
+          const hashedPassword = await bcrypt.hash(password, 10);
+          user = await prisma.user.create({
+            data: { username, email, password: hashedPassword },
+          });
+          return { id: user.id.toString(), username: user.username, email: user.email };
         }
-    })
-]
+
+        // ✅ ログイン処理
+        const user = await prisma.user.findUnique({ where: { username } });
+        if (user && (await bcrypt.compare(password, user.password))) {
+          return { id: user.id.toString(), username: user.username, email: user.email };
+        }
+        throw new Error("認証に失敗しました");
+      },
+    }),
+  ],
 };
 
 export const { handlers, signIn, signOut, auth } = NextAuth(config);
-
-

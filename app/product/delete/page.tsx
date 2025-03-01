@@ -5,13 +5,13 @@ import { collection, deleteDoc,getDocs, query, where } from "firebase/firestore"
 import React, { useState } from "react";
 
 const Delete = () => {
-  const [productname,setProductName] = useState("")
+  const [productName,setProductName] = useState("")
   const [id, setId] = useState<number | null>(null);
   const handleDelete = async(event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       const Ref = collection(db, "registr");
-      const req = query(Ref, where("name", "==", productname), where("id", "==", id));
+      const req = query(Ref, where("name", "==", productName), where("id", "==", id));
       const snapshot = await getDocs(req);
       
       if (snapshot.empty) {
@@ -22,7 +22,7 @@ const Delete = () => {
       for (const doc of snapshot.docs) {
         await deleteDoc(doc.ref); // 各ドキュメントを削除
       }
-      window.confirm(`製品：${productname} ID: ${id} を削除しました`);
+      window.confirm(`製品：${productName} ID: ${id} を削除しました`);
       setId(null);
       setProductName("")
     } catch (error) {
@@ -47,7 +47,7 @@ const Delete = () => {
             placeholder="製品名を入れてください"
             className="sm:w-[85%] w-[100%]"
             required
-            value={productname}
+            value={productName}
             onChange={(e)=> setProductName(e.target.value)}
           />
         </div>
