@@ -1,7 +1,7 @@
 import { db } from "@/lib/firebase";
 import { collection, DocumentData, getDocs, query, where } from "firebase/firestore";
 
-export const handleSearch = async (setSearch:  React.Dispatch<React.SetStateAction<DocumentData[]>>) => {
+export const handleSearch = async (name:string , setSearch:  React.Dispatch<React.SetStateAction<DocumentData[]>>) => {
     try {
       const searchQuery = query(
         collection(db, "registr"),

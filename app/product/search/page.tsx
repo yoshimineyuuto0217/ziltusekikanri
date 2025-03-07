@@ -50,7 +50,7 @@ const Search = () => {
         <button
           type="submit"
           className=" w-[100%] bg-blue-500  p-3 hover:bg-blue-600 transition"
-          onClick={()=>handleSearch(setSearch)}
+          onClick={()=>handleSearch(name,setSearch)}
         >
           検索
         </button>
