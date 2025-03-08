@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import Button from "@/components/Button";
 import EyeButton from "@/components/EyeButton";
+import { useRouter } from "next/navigation";
 
 const UserRegister = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ const UserRegister = () => {
   });
   
   const [ icon , setIcon ] = useState(false);
+  const [ error, setError] = useState("");
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,6 +28,7 @@ const UserRegister = () => {
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
 
     try {
       // NextAuthで新規ユーザー登録（CredentialsProviderのauthorizeメソッドで処理）
@@ -32,23 +36,19 @@ const UserRegister = () => {
         username: formData.name,
         password: formData.password,
         email: formData.email,
-        redirect: false,
+        redirect: false,  //リダイレクトを手動に trueだとnextauth側で実行されるからSSRになる
       });
 
       if (res?.error) {
-        throw new Error("ユーザー登録に失敗しました");
+        setError("ユーザー登録に失敗しました");
+        return;
       }
 
-      // 登録後に自動でログイン
-      await signIn("credentials", {
-        username: formData.name,
-        password: formData.password,
-        redirect: true,
-        callbackUrl: "/product", // ログイン後にリダイレクト
-      });
-    } catch (error) {
-      console.error(error);
-    }
+      router.push("/product");
+  } catch (error) {
+    console.error(error);
+    setError("予期せぬエラーが発生します")
+  }
   };
 
   return (
@@ -100,6 +100,7 @@ const UserRegister = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              autoComplete="new-password"
             />
             <EyeButton icon={icon} setIcon={setIcon}/>
             </div>

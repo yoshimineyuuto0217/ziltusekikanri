@@ -13,14 +13,18 @@ type ResultProps = {
 
 const Result: React.FC<ResultProps> = ({ searchResults ,setSearchResults}) => {
 
-  // IDを基準に降順ソート
-  const sortedResults = [...searchResults].sort((a, b) => b.id - a.id);
+  // 並びかえ
+  const sortedResults = [...searchResults].sort((a, b) => {
+    const dateA = a.month ? new Date(a.month.seconds * 1000) : new Date(0);
+    const dateB = b.month ? new Date(b.month.seconds * 1000) : new Date(0);
+    return dateB.getTime() - dateA.getTime(); // 新しい日付が先頭になるように
+  });
+  
   const [itemOffset, setItemOffset] = useState(0);
 
   // ページネーション処理
   const itemPerPage = 10;
   const endOffset = itemOffset + itemPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = sortedResults.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(sortedResults.length / itemPerPage);
 
@@ -32,12 +36,13 @@ const Result: React.FC<ResultProps> = ({ searchResults ,setSearchResults}) => {
    // utilsでかいてるhandleDeleteをonDeleteで囲む
   // 削除処理（削除後に即時反映）
   const onDelete = useCallback(
-    async (id: number, name: string) => {
-      await handleDelete(id, name);
-      setSearchResults((prevResults) => prevResults.filter((item) => item.id !== id));
+    async (docId: string , name: string , id: number) => {
+      await handleDelete(docId, name , id);
+      setSearchResults((prevResults) => prevResults.filter((item) => item.docId !== docId));
     },
     [setSearchResults]
   );
+  
   return (
     <div className="overflow-hidden overflow-x-auto md:overflow-visible">
       <table className="sm:m-auto w-[1000px] m-4 ">
@@ -80,7 +85,7 @@ const Result: React.FC<ResultProps> = ({ searchResults ,setSearchResults}) => {
               <td className="text-center">{result.height}</td>
               <td className="text-center">{result.temperature}c°</td>
               <td className="text-center">{result.comment}</td>
-              <td className="text-center" onClick={() => onDelete(result.id , result.name)}><DeleteIcon className="text-gray-500 hover:text-gray-800"/></td>
+              <td className="text-center" onClick={() => onDelete(result.docId , result.name , result.id)}><DeleteIcon className="text-gray-500 hover:text-gray-800"/></td>
             </tr>
           ))}
         </tbody>

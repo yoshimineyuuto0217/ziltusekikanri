@@ -5,13 +5,15 @@ import { useState } from "react";
 import Link from "next/link";
 import Button from "@/components/Button";
 import EyeButton from "@/components/EyeButton";
+import { useRouter } from "next/navigation"; 
 
 export default function Home() {
   const [username, setUsername] = useState(""); // ユーザー名
   const [password, setPassword] = useState(""); // パスワード
   const [error, setError] = useState(""); // エラーメッセージ
   const [ icon , setIcon ] = useState(false);
-
+  const router = useRouter();
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -25,7 +27,7 @@ export default function Home() {
     if (res?.error) {
       setError("ログインに失敗しました。再度お試しください。"); // エラーがあれば表示
     } else {
-      window.location.href = "/product"; // 成功した場合はproductページへリダイレクト
+      router.push("/product") ; // 成功した場合はproductページへリダイレクト
     }
   };
 
@@ -49,6 +51,7 @@ export default function Home() {
               placeholder="山田太郎"
               value={username}
               onChange={(e) => setUsername(e.target.value.replace(/\s+/g, ""))} // 入力時にusernameを更新
+              autoComplete="username"
             />
           </div>
           <div className="mb-6">
@@ -71,7 +74,7 @@ export default function Home() {
             <EyeButton icon={icon} setIcon={setIcon}/>
             </div>
           </div>
-          {error && <p className="text-red-500">{error}</p>} {/* エラーメッセージ表示 */}
+          {error && <p className="text-red-500" suppressHydrationWarning >{error}</p>} {/* エラーメッセージ表示 */}
           <div className="text-right block ">
           <Button name={"ログイン"} className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition"/>
           </div>
