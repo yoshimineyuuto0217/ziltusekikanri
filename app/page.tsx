@@ -17,17 +17,22 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const callbackUrl = `${window.location.origin}/product`
+
     // signInメソッドを使って認証を行う
     const res = await signIn("credentials", {
       redirect: false,
       username,
       password,
+      callbackUrl: callbackUrl,
     });
 
+    console.log("signIn Response:", res);
+    
     if (res?.error) {
       setError("ログインに失敗しました。再度お試しください。"); // エラーがあれば表示
     } else {
-      router.push("/product") ; // 成功した場合はproductページへリダイレクト
+      await router.push("/product") ; // 成功した場合はproductページへリダイレクト
     }
   };
 
