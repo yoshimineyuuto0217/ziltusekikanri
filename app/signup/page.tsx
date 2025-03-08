@@ -32,20 +32,25 @@ const UserRegister = () => {
     console.log(error);
 
     try {
+      const callbackUrl = `${window.location.origin}/product`;
+
       // NextAuthで新規ユーザー登録（CredentialsProviderのauthorizeメソッドで処理）
       const res = await signIn("credentials", {
         username: formData.name,
         password: formData.password,
         email: formData.email,
         redirect: false,  //リダイレクトを手動に trueだとnextauth側で実行されるからSSRになる
+        callbackUrl: callbackUrl,
       });
 
+      console.log("signIn Response:", res);
+      
       if (res?.error) {
         setError("ユーザー登録に失敗しました");
         return;
       }
 
-      router.push("/product");
+     await router.push("/product");
   } catch (error) {
     console.error(error);
     setError("予期せぬエラーが発生します")
