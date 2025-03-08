@@ -29,6 +29,7 @@ const UserRegister = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+    console.log(error);
 
     try {
       // NextAuthで新規ユーザー登録（CredentialsProviderのauthorizeメソッドで処理）
