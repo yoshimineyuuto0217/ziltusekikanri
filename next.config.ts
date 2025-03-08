@@ -1,5 +1,5 @@
-import type { NextConfig } from 'next';
-import type { Configuration } from 'webpack';
+import type { NextConfig } from "next";
+import type { Configuration } from "webpack";
 
 const nextConfig: NextConfig = {
   env: {
@@ -8,8 +8,10 @@ const nextConfig: NextConfig = {
   webpack: (config: Configuration, { isServer }: { isServer: boolean }) => {
     if (!isServer) {
       config.resolve = config.resolve || {};
-      config.resolve.alias = config.resolve.alias || {};
-      config.resolve.alias['@mapbox/node-pre-gyp'] = false as any; // `false` を `any` にキャスト
+      config.resolve.alias = {
+        ...(config.resolve.alias as Record<string, string | false | string[]>),
+        "@mapbox/node-pre-gyp": false,
+      };
     }
     return config;
   },
