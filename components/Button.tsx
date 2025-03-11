@@ -2,6 +2,7 @@ import React from 'react'
 
 interface RegisterProps {
     name:string;
+    disabled?: boolean;
     className?: string;
 };
 
@@ -15,4 +16,4 @@ const Button = (props:RegisterProps) => {
   )
 }
 
-export default Button 
+export default Button
