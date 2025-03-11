@@ -1,39 +1,19 @@
 "use client"
 
-import { signIn } from "next-auth/react"; // NextAuthのsignInメソッドをインポート
 import { useState } from "react";
 import Link from "next/link";
 import Button from "@/components/Button";
 import EyeButton from "@/components/EyeButton";
-import { useRouter } from "next/navigation"; 
 
 export default function Home() {
   const [username, setUsername] = useState(""); // ユーザー名
-  const [password, setPassword] = useState(""); // パスワード
-  const [error, setError] = useState(""); // エラーメッセージ
+  const [password, setPassword] = useState(""); // パスワード 
   const [ icon , setIcon ] = useState(false);
-  const router = useRouter();
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const callbackUrl = `${window.location.origin}/product`
-
-    // signInメソッドを使って認証を行う
-    const res = await signIn("credentials", {
-      redirect: false,
-      username,
-      password,
-      callbackUrl: callbackUrl,
-    });
-
-    console.log("signIn Response:", res);
     
-    if (res?.error) {
-      setError("ログインに失敗しました。再度お試しください。"); // エラーがあれば表示
-    } else {
-      await router.push("/product") ; // 成功した場合はproductページへリダイレクト
-    }
   };
 
   return (
@@ -79,7 +59,6 @@ export default function Home() {
             <EyeButton icon={icon} setIcon={setIcon}/>
             </div>
           </div>
-          {error && <p className="text-red-500" suppressHydrationWarning >{error}</p>} {/* エラーメッセージ表示 */}
           <div className="text-right block ">
           <Button name={"ログイン"} className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition"/>
           </div>

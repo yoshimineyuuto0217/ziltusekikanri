@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { signIn } from "next-auth/react";
 import Button from "@/components/Button";
 import EyeButton from "@/components/EyeButton";
-import { useRouter } from "next/navigation";
+
 
 const UserRegister = () => {
   const [formData, setFormData] = useState({
@@ -14,8 +13,6 @@ const UserRegister = () => {
   });
   
   const [ icon , setIcon ] = useState(false);
-  const [ error, setError] = useState("");
-  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,35 +25,9 @@ const UserRegister = () => {
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
-    console.log(error);
+    
 
-    try {
-      const callbackUrl = `${window.location.origin}/product`;
-
-      // NextAuthで新規ユーザー登録（CredentialsProviderのauthorizeメソッドで処理）
-      const res = await signIn("credentials", {
-        username: formData.name,
-        password: formData.password,
-        email: formData.email,
-        redirect: false,  //リダイレクトを手動に trueだとnextauth側で実行されるからSSRになる
-        callbackUrl: callbackUrl,
-      });
-
-      console.log("signIn Response:", res);
-      
-      if (res?.error) {
-        setError("ユーザー登録に失敗しました");
-        return;
-      }
-
-     await router.push("/product");
-  } catch (error) {
-    console.error(error);
-    setError("予期せぬエラーが発生します")
   }
-  };
-
   return (
     <>
       <h1 className="text-center text-[2.5em] mb-5">新規登録</h1>
@@ -119,3 +90,4 @@ const UserRegister = () => {
 };
 
 export default UserRegister;
+
