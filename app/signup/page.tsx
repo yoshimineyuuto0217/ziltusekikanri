@@ -3,48 +3,49 @@
 import React, { useState } from "react";
 import Button from "@/components/Button";
 import EyeButton from "@/components/EyeButton";
+import { registerUser } from "@/components/register";
+import { useRouter } from "next/navigation";
 
 
 const UserRegister = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [ icon , setIcon ] = useState(false);
+  const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-  
-    setFormData({
-      ...formData,
-      [name]: name === "name" ? value.replace(/\s+/g, "") : value, // 名前入力時に空白を削除
-    });
-  };
-  
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
-
-  }
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      const result = await registerUser(formData);
+      if (typeof result === 'string') {
+        setErrorMessage(result);
+      } else {
+        router.push("/");
+      }
+    } catch (error) {
+      console.error('Registration failed:', error);
+      setErrorMessage('登録処理中にエラーが発生しました。');
+    }
+};
   return (
     <>
       <h1 className="text-center text-[2.5em] mb-5">新規登録</h1>
       <div className="bg-gray-200 sm:w-[50%] w-[90%] h-[80%] m-auto py-10 px-5">
-        <form onSubmit={handleSubmit}>
+      {errorMessage && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 border border-red-400 rounded">
+            {errorMessage}
+          </div>
+        )}
+        <form action={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
               名前
             </label>
             <input
-              type="text"
+              type="name"
               id="name"
               name="name"
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="山田太郎"
-              value={formData.name}
-              onChange={handleChange}
               required
             />
           </div>
@@ -58,8 +59,6 @@ const UserRegister = () => {
               name="email"
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="example@example.com"
-              value={formData.email}
-              onChange={handleChange}
               required
             />
           </div>
@@ -74,8 +73,6 @@ const UserRegister = () => {
               name="password"
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="••••••••"
-              value={formData.password}
-              onChange={handleChange}
               required
               autoComplete="new-password"
             />

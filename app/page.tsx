@@ -6,8 +6,6 @@ import Button from "@/components/Button";
 import EyeButton from "@/components/EyeButton";
 
 export default function Home() {
-  const [username, setUsername] = useState(""); // ユーザー名
-  const [password, setPassword] = useState(""); // パスワード 
   const [ icon , setIcon ] = useState(false);
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,8 +32,6 @@ export default function Home() {
               name="name"
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="山田太郎"
-              value={username}
-              onChange={(e) => setUsername(e.target.value.replace(/\s+/g, ""))} // 入力時にusernameを更新
               autoComplete="username"
             />
           </div>
@@ -53,8 +49,6 @@ export default function Home() {
               name="password"
               className="w-full p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500  "
               placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // 入力時にpasswordを更新
             />
             <EyeButton icon={icon} setIcon={setIcon}/>
             </div>
