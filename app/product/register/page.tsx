@@ -85,7 +85,7 @@ const ProductRegister = () => {
             value={temperature === null ? "" : temperature}
             onChange={(e) => setTemperature(e.target.value === "" ? null : Number(e.target.value))}
           />
-          <label htmlFor="production" className="sm:w-[10%] w-[100%] p-2">
+          <label htmlFor="production" className="sm:w-[10%] w-[100%] p-2 ">
             生産数
           </label>
           <input
@@ -96,7 +96,7 @@ const ProductRegister = () => {
             required
             value={production === null ? "" : production}
             onChange={(e) => setProduction(e.target.value === "" ? null : Number(e.target.value))}
-            className="w-[100%] sm:w-[35%] mb-5 mr-[10%] p-2"
+            className="w-[100%] sm:w-[35%] mb-5 mr-[10%] p-2 "
           />
           <label htmlFor="month" className="sm:w-[10%] w-[100%] p-2">
             生産日
@@ -104,7 +104,7 @@ const ProductRegister = () => {
           <input
             type="date"
             id="month"
-            className="w-[100%] sm:w-[35%] mb-5 p-2"
+            className="w-[100%] sm:w-[35%] mb-5 p-2 "
             required
             value={month ? month.toDate().toISOString().split("T")[0] : ""}
             onChange={(e) => handleMonthChange(e, setMonth)}

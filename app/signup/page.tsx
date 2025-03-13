@@ -79,7 +79,7 @@ const UserRegister = () => {
             <EyeButton icon={icon} setIcon={setIcon}/>
             </div>
           </div>
-          <Button name={"登録"} className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition"/>
+          <Button name={"登録"} className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition" />
         </form>
       </div>
     </>

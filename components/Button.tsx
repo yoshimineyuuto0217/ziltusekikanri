@@ -8,7 +8,7 @@ interface RegisterProps {
 const Button = (props:RegisterProps) => {
   return (
     <div className="text-right block">
-            <button type="submit" className={props.className}>
+            <button type="submit" className={props.className} >
               {props.name}
             </button>
           </div>

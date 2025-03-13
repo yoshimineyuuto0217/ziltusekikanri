@@ -12,6 +12,7 @@
   "dependencies": {
     "@auth/core": "^0.38.0",
     "@auth/firebase-adapter": "^2.7.4",
+    "@auth/prisma-adapter": "^2.8.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.0",
@@ -28,7 +29,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-paginate": "^8.3.0",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
