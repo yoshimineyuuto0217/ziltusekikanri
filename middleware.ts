@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
     // jwtを全体で使うときはsecret設定が必要
-    const token = await getToken({ req , secret: process.env.NEXTAUTH_SECRET });
+    const token = await getToken({ req , secret: process.env.NEXTAUTH_SECRET ,secureCookie: process.env.NODE_ENV === "production" });
 
     const { pathname } = new URL(req.url);
 
