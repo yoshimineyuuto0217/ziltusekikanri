@@ -5,12 +5,15 @@ import { useState } from "react";
 import Link from "next/link";
 import Button from "@/components/Button";
 import EyeButton from "@/components/EyeButton";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [username, setUsername] = useState(""); // ユーザー名
   const [password, setPassword] = useState(""); // パスワード
-  // const [error, setError] = useState(""); // エラーメッセージ
   const [ icon , setIcon ] = useState(false);
+
+const router = useRouter(); // 追加
+
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +28,7 @@ export default function Home() {
         console.error("認証失敗:", result.error);
         alert("ログインに失敗しました。ユーザー名またはパスワードが間違っています。");
       } else {
-        window.location.href = "/product"; // ログイン成功時の遷移先
+        router.push("/product"); // Next.jsのページ遷移を使用
       }
     }
   return (
@@ -71,7 +74,6 @@ export default function Home() {
             <EyeButton icon={icon} setIcon={setIcon}/>
             </div>
           </div>
-          {/* {error && <p className="text-red-500" suppressHydrationWarning >{error}</p>} エラーメッセージ表示 */}
           <div className="text-right block ">
           <Button name={"ログイン"} className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition"/>
           </div>
