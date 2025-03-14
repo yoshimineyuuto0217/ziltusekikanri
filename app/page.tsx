@@ -5,15 +5,12 @@ import { useState } from "react";
 import Link from "next/link";
 import Button from "@/components/Button";
 import EyeButton from "@/components/EyeButton";
-import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [username, setUsername] = useState(""); // ユーザー名
   const [password, setPassword] = useState(""); // パスワード
   const [ icon , setIcon ] = useState(false);
-
-const router = useRouter(); // 追加
-
+  
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +25,7 @@ const router = useRouter(); // 追加
         console.error("認証失敗:", result.error);
         alert("ログインに失敗しました。ユーザー名またはパスワードが間違っています。");
       } else {
-        router.push("/product"); // Next.jsのページ遷移を使用
+        window.location.href = "/product"; // ログイン成功時の遷移先
       }
     }
   return (
