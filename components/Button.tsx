@@ -3,12 +3,13 @@ import React from 'react'
 interface RegisterProps {
     name:string;
     className?: string;
+    disabled?:boolean;
 };
 
 const Button = (props:RegisterProps) => {
   return (
     <div className="text-right block">
-            <button type="submit" className={props.className} >
+            <button type="submit" className={props.className} disabled={props.disabled} >
               {props.name}
             </button>
           </div>

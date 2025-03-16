@@ -10,11 +10,11 @@ export default function Home() {
   const [username, setUsername] = useState(""); // ユーザー名
   const [password, setPassword] = useState(""); // パスワード
   const [ icon , setIcon ] = useState(false);
-  
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsSubmitting(true);
     // signInメソッドを使って認証を行う
         const result = await signIn("credentials", {
         username,
@@ -24,6 +24,9 @@ export default function Home() {
       if (result?.error) {
         console.error("認証失敗:", result.error);
         alert("ログインに失敗しました。ユーザー名またはパスワードが間違っています。");
+        setIsSubmitting(false);
+        setPassword("");
+        setUsername("");
       } else {
         window.location.href = "/product"; // ログイン成功時の遷移先
       }
@@ -49,6 +52,7 @@ export default function Home() {
               value={username}
               onChange={(e) => setUsername(e.target.value.replace(/\s+/g, ""))} // 入力時にusernameを更新
               autoComplete="username"
+              required
             />
           </div>
           <div className="mb-6">
@@ -67,12 +71,14 @@ export default function Home() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)} // 入力時にpasswordを更新
+              required
             />
             <EyeButton icon={icon} setIcon={setIcon}/>
             </div>
           </div>
           <div className="text-right block ">
-          <Button name={"ログイン"} className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition"/>
+          <Button  name={isSubmitting ? "ログイン中..." : "ログイン"} disabled={isSubmitting}
+          className="w-[100%] sm:w-[200px] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition"/>
           </div>
         </form>
         <p>アカウントをお持ちでない方は <Link className="text-blue-500" href="/signup">こちらから登録</Link></p>
