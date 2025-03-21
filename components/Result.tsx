@@ -37,8 +37,10 @@ const Result: React.FC<ResultProps> = ({ searchResults ,setSearchResults}) => {
   // 削除処理（削除後に即時反映）
   const onDelete = useCallback(
     async (docId: string , name: string , id: number) => {
-      await handleDelete(docId, name , id);
+     const success= await handleDelete(docId, name , id);
+     if(success){
       setSearchResults((prevResults) => prevResults.filter((item) => item.docId !== docId));
+     }
     },
     [setSearchResults]
   );

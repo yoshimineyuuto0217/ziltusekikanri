@@ -1,24 +1,6 @@
 import { db } from "@/lib/firebase";
 import { collection, DocumentData, getDocs, query, where } from "firebase/firestore";
 
-//これだとデータ消した後にほかのデータが画面から見えなくなる
-// export const handleSearch = async (name:string , setSearch:  React.Dispatch<React.SetStateAction<DocumentData[]>>) => {
-//     try {
-//       const searchQuery = query(
-//         collection(db, "registr"),
-//         where("name", "==", name)
-//       );
-//       const querySnapshot = await getDocs(searchQuery);
-//       if (querySnapshot.empty) {
-//         window.confirm(`${name}は存在しません`);
-//         return;
-//       }
-//       const results = querySnapshot.docs.map((doc) => doc.data());
-//       setSearch(results); // 結果を取得して状態にセット
-//     } catch (error) {
-//       console.error("Error fetching data: ", error);
-//     }
-//   };
 export const handleSearch = async (
   name: string,
   setSearch: React.Dispatch<React.SetStateAction<DocumentData[]>>
@@ -50,7 +32,6 @@ export const handleSearch = async (
         uniqueKey: `${doc.data().name}-${doc.data().id}`,
       }));
     }
-
     setSearch(results);
   } catch (error) {
     console.error("Error fetching data: ", error);

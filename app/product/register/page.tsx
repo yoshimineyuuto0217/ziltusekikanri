@@ -98,7 +98,7 @@ const ProductRegister = () => {
             onChange={(e) => setProduction(e.target.value === "" ? null : Number(e.target.value))}
             className="w-[100%] sm:w-[35%] mb-5 mr-[10%] p-2 "
           />
-          <label htmlFor="month" className="sm:w-[10%] w-[100%] p-2">
+          <label htmlFor="month" className="sm:w-[10%] w-[100%] p-2 appearance-none">
             生産日
           </label>
           <input

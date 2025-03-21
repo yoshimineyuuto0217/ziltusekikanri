@@ -7,7 +7,7 @@ export const handleDelete = async (docId: string , name: string , id: number ) =
     const confirmDelete = window.confirm(`本当に製品「${name}」(ID: ${id}) を削除しますか？`);
     
     if (!confirmDelete) {
-      return; // ユーザーがキャンセルした場合は削除しない
+      return  false; // ユーザーがキャンセルした場合は削除しない
     }
 
     const Ref = collection(db, "registr");
@@ -17,7 +17,7 @@ export const handleDelete = async (docId: string , name: string , id: number ) =
 
     if (snapshot.empty) {
       window.alert("その製品は存在しません");
-      return;
+      return false;
     }
 
     // 非同期処理を待ちながら削除
@@ -25,12 +25,13 @@ export const handleDelete = async (docId: string , name: string , id: number ) =
       if( docId === docId ) {
       await deleteDoc(doc.ref);
       window.alert(`製品「${name}」(ID: ${id})を削除しました`);
-      return;
+      return  true;
       }
     }
 
   } catch (error) {
     console.error("データ削除に失敗しました", error);
     window.alert("データ削除に失敗しました");
+    return false;
   }
 };

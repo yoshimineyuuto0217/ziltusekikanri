@@ -15,9 +15,8 @@ const UserRegister = () => {
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); 
-    setIsSubmitting(true); 
-
+    event.preventDefault();
+    setIsSubmitting(true);
     try {
       const formData = new FormData(event.currentTarget);
       const result = await registerUser(formData);
