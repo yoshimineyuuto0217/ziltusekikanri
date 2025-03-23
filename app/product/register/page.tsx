@@ -104,7 +104,7 @@ const ProductRegister = () => {
           <input
             type="date"
             id="month"
-            className="w-[100%] sm:w-[35%] mb-5 px-2 py-4 appearance-none bg-white "
+            className="w-[100%] sm:w-[35%] mb-5 px-2 py-3.5 sm:p-1.5 appearance-none bg-white "
             required
             value={month ? month.toDate().toISOString().split("T")[0] : ""}
             onChange={(e) => handleMonthChange(e, setMonth)}
