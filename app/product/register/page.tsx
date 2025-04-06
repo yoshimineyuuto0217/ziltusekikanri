@@ -146,7 +146,6 @@ const ProductRegister = () => {
         </div>
         <Button name="登録" className="w-[100%] mb-5 bg-blue-500 p-3 hover:bg-blue-600 transition" />
       </form>
-      テスt
     </>
   );
 };
