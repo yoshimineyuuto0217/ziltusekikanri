@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
   fallback: ["Courier", "monospace"], // フォールバックフォントを指定
 });
 export const metadata: Metadata = {
-  title: "実績管理アプリ",
+  title: "実績管理アプリダダダ",
   description: "製品の管理をパソコン上で管理することで調べる時間を削減します",
 };
 export default function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
